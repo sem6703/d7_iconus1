@@ -378,29 +378,26 @@ end;
 
 procedure TForm1.mask;
 const cc: array[boolean] of string=('#00#00#00#00','#00#01#ff#ff');
+const un: array[0..15]of byte=(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
 var i,j,k: integer; c: tcolor; w: word;  s1,s2,s3,s4: string; b: byte;  io: ticon;
   f: file of byte;
   sss: string;
 begin
-  s4:='#FF#FF#00'+
-  '#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00'+
-  '#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00'+
-  '#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00#00#FF#FF#00'+
-  '#00#FF#FF#00#00#FF#FF#00#00#00#00#00#00';
   s4:='';   s3:='';
   for i:=0 to 15 do
     begin
     w:=0;
     for j:=0 to 15 do
-      if a[j,i]=clwhite then
+      if a[un[j],i]=clwhite then
         begin
-          w:=w or (1 shl j);
+          w:=w or (1 shl un[j]);
         end
         else
         begin
-          w:=w and ($ffff xor (1 shl j));
+          w:=w and ($ffff xor (1 shl un[j]));
         end;
       s4:=s4+'#'+inttohex(lo(w),2)+'#'+inttohex(hi(w),2)+'#00#00';
+      //if i=15 then showmessage(s4);
 
       w:=w xor $ffff;
       for j:=0 to 7 do
@@ -419,10 +416,7 @@ begin
   '#00#01#00#20#00#00#00#00#00#00#00#00#00#00#00#00'+
   '#00#00#00#00#00#00#00#00#00#00#00#00#00';
 
- //assignfile(f,'my.ico');
   assignfile(f,extractfilepath(paramstr(0))+'my.ico');
-  //extractfilepath(paramstr(0))+
-  //assignfile(f,myico);//aessignfile(f,'my.ico');
 
   rewrite(f);
   for i:=0 to length(s1) div 3-1 do begin b:=strtoint('$'+s1[1+i*3+1]+s1[1+i*3+2]); write(f,b); end;
@@ -431,11 +425,8 @@ begin
   for i:=0 to length(s3) div 3-1 do begin b:=strtoint('$'+s3[1+i*3+1]+s3[1+i*3+2]); write(f,b); end;
   for i:=0 to length(s4) div 3-1 do begin b:=strtoint('$'+s4[1+i*3+1]+s4[1+i*3+2]); write(f,b); end;
   closefile(f);
-  CopyFile(pchar(extractfilepath(paramstr(0))+'my.ico'),pchar(myico),false);   //  pchar(sss)
-  //////////////////// now copy    ikka.s+
-//getlist2(src,msk: string; x: tstringlist): word; // список файлов по маске
- //;
- //showmessage(format('%d',[getlist2(ikka.s,'*.ico',lst)]));
+  CopyFile(pchar(extractfilepath(paramstr(0))+'my.ico'),pchar(myico),false);   // 
+  ////////////////////
   i:= 1+getlist2(ikka.s,'*.ico',lst) ;
  repeat
   sss:=''+ikka.s+format('my%d.ico',[i]);//'my1.ico';
