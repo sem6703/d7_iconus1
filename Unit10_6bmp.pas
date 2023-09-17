@@ -1,4 +1,4 @@
-unit Unit10_5bmp;
+unit Unit10_6bmp;
 {
  создает файлы иконки, base64 bmp
   my.ico
@@ -630,6 +630,7 @@ if dexists(s) then
   if (v2.width+v2.Height)>0 then
      very; // перенос изображения области на поле
   vw;
+  //Button1Click(nil);    преждевременно
 end;
 
 procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -931,8 +932,8 @@ begin
       pen.Width:=2;
       pen.Color:=clred;
       brush.Style:=bsclear;
-      rectangle(t1.X,t1.y,t2.X,t2.y);
-      rectangle(t1.X,t1.y,t1.X+v2.Width,t1.y+v2.Height);
+      rectangle(t1.X-1,t1.y-1,t2.X+2,t2.y+2);//rectangle(t1.X,t1.y,t2.X,t2.y);
+      //rectangle(t1.X-2,t1.y-2,t1.X+v2.Width,t1.y+v2.Height);
     end;
   fm.Caption:=format('%d   %d',[v2.Width,v2.Height]);
 end;
@@ -1010,13 +1011,13 @@ end;
       pen.Width:=2;
       pen.Color:=clred;
       brush.Style:=bsclear;
-      rectangle(t1.X,t1.y,t2.X,t2.y);
+      rectangle(t1.X-1,t1.y-1,t2.X+2,t2.y+2);//rectangle(t1.X,t1.y,t2.X,t2.y);
       pen.Color:=clblack;//clfuchsia;//
       case boom of
         1: rectangle(t1.X,t1.y,t2.X,t1.y-1);
-        2: rectangle(t2.X+1,t1.y,t2.X,t2.y);
-        3: rectangle(t1.X,t2.y,t2.X,t2.y+1);
-        4: rectangle(t1.X-1,t1.y,t1.X,t2.y);
+        2: rectangle(t2.X+2,t1.y+1,t2.X+3,t2.y+1); //  rectangle(t2.X+1,t1.y,t2.X,t2.y);
+        3: rectangle(t1.X,t2.y+2,t2.X+1,t2.y+3); //  rectangle(t1.X,t2.y,t2.X,t2.y+1);
+        4: rectangle(t1.X-2,t1.y,t1.X-1,t2.y+1); //  rectangle(t1.X-1,t1.y,t1.X,t2.y);
       end;
     end;
   fm.Caption:=format('%d   %d',[t2.X-t1.x,t2.Y-t1.y]);
@@ -1107,6 +1108,7 @@ end;
 
 procedure TForm1.ico1Click(Sender: TObject);
 begin
+  Button1Click(nil);
   ico2base64();
 end;
 
@@ -1434,6 +1436,7 @@ end;
 
 procedure TForm1.gif1Click(Sender: TObject);
 begin
+Button1Click(nil);
 gifka();
 end;
 
