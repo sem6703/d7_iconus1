@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 220
-  Top = 168
+  Left = 210
+  Top = 135
   Width = 390
   Height = 434
   Caption = #1089#1086#1079#1076#1072#1085#1080#1077' '#1080#1082#1086#1085#1082#1080' icon. [my.ico]'
@@ -16,9 +16,9 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
-    Left = 24
+    Left = 16
     Top = 8
-    Width = 273
+    Width = 201
     Height = 297
     OnMouseDown = Image1MouseDown
     OnMouseMove = Image1MouseMove
@@ -32,9 +32,9 @@ object Form1: TForm1
     OnClick = Image2Click
   end
   object Image3: TImage
-    Left = 312
+    Left = 288
     Top = 8
-    Width = 50
+    Width = 74
     Height = 256
     OnMouseDown = Image3MouseDown
   end

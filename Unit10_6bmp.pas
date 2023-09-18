@@ -1,7 +1,7 @@
 unit Unit10_6bmp;
 {
  создает файлы иконки, base64 bmp
-  my.ico
+  my.ico                                  
   10.html
 
                10.ht
@@ -84,7 +84,8 @@ procedure very; // перенос картинки из буфера на поле
   end;
 
 //const likeWhite=rgb(0,0,0);
-const ccc: array[0..6]of tcolor=($ee82ee,clblack,clyellow,clred,claqua,16777210,clwhite);  //  olive
+const ccc: array[0..13]of tcolor=($ee82ee,clblack,clyellow,clred,claqua,16777210,clwhite,//);  //  olive
+    clblue,clmaroon,clolive,clfuchsia,clteal,cllime,clwhite);
 var
   Form1: TForm1;
   a: array[0..15,0..15] of tcolor;
@@ -606,14 +607,28 @@ if dexists(s) then
   r:=image3.height / 7;
   with image3.Canvas do
     begin
-      brush.Color:=clblue;
+      brush.Color:=clwhite;
       rectangle(cliprect);
       for j:=0 to high(ccc) do
         begin
-        brush.Color:=ccc[j];
-        rectangle(rect(0,round(r*j),50,round(r*(j+1))));
+        brush.Color:=ccc[j];//
+        //rectangle(rect(37*(j div 7),round(r*(j mod 7)),37+37*(j div 7),round(r+r*((j+1)mod 7))));  //50
+        //rectangle(rect(0,round(r*(j)),37,round(r*((j+1)))));
+        if not(j in[6,13]) then
+        rectangle(
+        rect(37*round((j div 7)),
+        round(r*(j mod 7)),
+        37+37*round(((j) div 7)),
+        round(r+r*(j mod 7))));
+        if j=100 then
+        begin
+          //showmessage(inttostr(round(r*(j mod 7))));
+          //showmessage(inttostr(round(r+r*(j mod 7))));
+          break;
+
         end;
-       moveto(0,256-38); lineto(50,256);
+        end;
+       moveto(0,256-round(r)); lineto(74,256); // черкнул невидимый
     end;
   nameiydttydkkutd:='4.ico';
   //****************
@@ -683,11 +698,12 @@ end;
 
 procedure TForm1.Image3MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
-var i: integer;
+var i,j: integer;
 begin
   i:=y div (image3.height div 7);
-  label1.caption:=inttostr(i);
-  if i in [0..6] then mok:=i;
+  j:=x div (image3.width div 2);
+  //label1.caption:=inttostr(i)+' '+inttostr(j); // отладочное
+  if (i in [0..6])and(j in [0..1]) then mok:=j*7+i;
 end;
 
 procedure TForm1.here1Click(Sender: TObject);
