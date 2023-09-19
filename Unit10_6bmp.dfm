@@ -89,6 +89,9 @@ object Form1: TForm1
       Caption = 'here'
       OnClick = here1Click
     end
+    object v1061: TMenuItem
+      Caption = 'v10.6'
+    end
   end
   object OpenDialog1: TOpenDialog
     FileName = '*.bmp'

@@ -36,6 +36,7 @@ type
     base641: TMenuItem;
     ico1: TMenuItem;
     gif1: TMenuItem;
+    v1061: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
