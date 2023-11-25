@@ -1,4 +1,4 @@
-unit Unit10_6bmp;
+unit Unit10_7bmp;
 {
  создает файлы иконки, base64 bmp
   my.ico                                  
@@ -378,9 +378,22 @@ begin
   m.free;
 end;
 
+
+function emae(w: word; x: integer; f: boolean): word;
+//const un: array[0..15]of byte=(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
+const un: array[0..15]of byte=(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
+//const un: array[0..15]of byte=(15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0);
+begin
+  if f then
+    result :=w or (1 shl un[x])
+    else
+    result :=w and ((1 shl un[x])xor $ffff)
+end;
+
 procedure TForm1.mask;
 const cc: array[boolean] of string=('#00#00#00#00','#00#01#ff#ff');
-const un: array[0..15]of byte=(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
+//const un: array[0..15]of byte=(7,6,5,4,3,2,1,0,15,14,13,12,11,10,9,8);
+//const un: array[0..15]of byte=(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
 var i,j,k: integer; c: tcolor; w: word;  s1,s2,s3,s4: string; b: byte;  io: ticon;
   f: file of byte;
   sss: string;
@@ -389,18 +402,30 @@ begin
   for i:=0 to 15 do
     begin
     w:=0;
+
     for j:=0 to 15 do
-      if a[un[j],i]=clwhite then
+      w:=emae(w,j,a[j,i]=clwhite);
+    //if i=0 then showmessage(format('%x',[w]));
+    if i=0 then showmessage(inttohex(lo(w),2)+inttohex(hi(w),2) );
+    {
+    for j:=0 to 15 do
+      //if a[un[j],i]=clwhite then
+      if a[j,i]=clwhite then
         begin
           w:=w or (1 shl un[j]);
+          //w:=w or (1 shl j);
         end
         else
         begin
           w:=w and ($ffff xor (1 shl un[j]));
+          //w:=w and ($ffff xor (1 shl j));
         end;
+
+        }
       s4:=s4+'#'+inttohex(lo(w),2)+'#'+inttohex(hi(w),2)+'#00#00';
       //if i=15 then showmessage(s4);
 
+      {
       w:=w xor $ffff;
       for j:=0 to 7 do
       if (lo(w) and (1 shl j))=0 then s3:=s3+cc[false] else s3:=s3+format('#%s#%s#%s#ff',
@@ -409,6 +434,17 @@ begin
       for j:=0 to 7 do
       if (hi(w) and (1 shl j))=0 then s3:=s3+cc[false] else s3:=s3+format('#%s#%s#%s#ff',
       [inttohex(getBvalue(a[8+j,i]),2),inttohex(getGvalue(a[8+j,i]),2),inttohex(getRvalue(a[8+j,i]),2)]);
+      }
+
+      for j:=0 to 15 do
+        if (a[j,i])=clwhite then
+           s3:=s3+cc[false]
+          else
+          s3:=s3+format('#%s#%s#%s#ff',
+      [inttohex(getBvalue(a[j,i]),2),
+      inttohex(getGvalue(a[j,i]),2),
+      inttohex(getRvalue(a[j,i]),2)]);
+
     end;
   //*********************
 
